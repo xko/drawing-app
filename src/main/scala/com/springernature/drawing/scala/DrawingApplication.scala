@@ -1,6 +1,5 @@
 package com.springernature.drawing.scala
 
-import scala.util.{Success, Try, Using}
 
 object DrawingApplication {
     def consoleIn = Command.parseAll(io.Source.stdin.getLines())
