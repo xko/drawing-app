@@ -10,7 +10,7 @@ sealed trait Step {
 
     def tryNext(cmd: Command) = Try(next(cmd))
 
-    def walk(cmds: Iterator[Try[Command]]) = cmds.scanLeft(this) { (stp, cmd) =>
+    def walk(cmds: IterableOnce[Try[Command]]) = cmds.iterator.scanLeft(this) { (stp, cmd) =>
         cmd.flatMap(stp.tryNext).fold(ex => Error(ex.getMessage, stp), identity)
     }.takeWhile(_ != End)
 }
