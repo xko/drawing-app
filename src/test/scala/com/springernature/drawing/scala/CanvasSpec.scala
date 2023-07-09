@@ -54,4 +54,13 @@ class CanvasSpec extends AnyFunSpec with Matchers {
               `-----""".stripMargin('`')
     }
 
+    it("retrieves value at coordinate") {
+        Canvas(4,4).paint(2,3).get(2,3) shouldBe 'x'
+        Canvas(4,4).paint(2,3).get(3,3) shouldBe ' '
+    }
+
+    it("retrieves empty for invalid coordinate") {
+        Canvas(1,1).paint(9,0).get(2,3) shouldBe ' '
+    }
+
 }

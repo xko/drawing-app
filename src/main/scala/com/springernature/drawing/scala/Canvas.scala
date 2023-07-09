@@ -1,16 +1,20 @@
 package com.springernature.drawing.scala
 
-import scala.+:
+import com.springernature.drawing.scala.Canvas.Clean
 
-case class Canvas private(w: Int, h: Int, content:Seq[Boolean]) {
+
+case class Canvas private(w: Int, h: Int, content:Seq[Char]) {
+    import Canvas.Painted
+
     def isValid(x: Int, y: Int): Boolean = x > 0 && x <= w && y > 0 && y <= h
 
-    def paint(x:Int, y:Int):Canvas = if(isValid(x,y)) copy(content = content.updated(w*(y-1)+(x-1),true)) else this
+    def paint(x:Int, y:Int):Canvas =
+        if(isValid(x,y)) copy(content = content.updated(w*(y-1)+(x-1),Painted)) else this
+
+    def get(x: Int, y:Int) = if (isValid(x,y)) content(w*(y-1)+(x-1)) else Clean
 
 
-    def renderPos(pos: Boolean) = if(pos) "x" else " "
-
-    def renderLine(line: Seq[Boolean]) = "|"+line.map(renderPos).mkString("")+"|"
+    def renderLine(line: Seq[Char]) = "|"+line.mkString("")+"|"
 
     def renderLines = ("-" * (w+2)) +: content.grouped(w).map(renderLine).toSeq :+ ("-" * (w+2) )
 
@@ -18,5 +22,7 @@ case class Canvas private(w: Int, h: Int, content:Seq[Boolean]) {
 }
 
 object Canvas {
-    def apply(w:Int, h:Int): Canvas = Canvas(w, h, Vector.fill(w * h)(false))
+    val Clean = ' '
+    val Painted = 'x'
+    def apply(w:Int, h:Int): Canvas = Canvas(w, h, Vector.fill(w * h)(Clean))
 }
