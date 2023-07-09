@@ -21,7 +21,7 @@ object Command {
         }
     }
 
-    def parseAll[CC[_]](input: IterableOnceOps[String,CC,CC[String]]):CC[Try[Command]] = input.map(parse)
+    def parseAll(input: IterableOnce[String]):Iterator[Try[Command]] = input.iterator.map(parse)
 }
 
 sealed trait DrawingCommand extends Command {
