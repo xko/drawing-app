@@ -1,0 +1,30 @@
+group 'com.springernature'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'idea'
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+
+mainClassName = "com.springernature.drawing.DrawingApplication"
+
+jar {
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '4.8.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:4.8.0'
+}
