@@ -6,9 +6,11 @@ import scala.util.{Failure, Success, Try}
 sealed trait Step {
     def next(cmd: Command): Step
 
+    def render: Option[String] = None
+
     def tryNext(cmd: Command) = Try(next(cmd))
 
-    def walk(cmds: Iterator[Try[Command]]) = cmds.scanLeft[Step](this) { (stp, cmd) =>
+    def walk(cmds: Iterator[Try[Command]]) = cmds.scanLeft(this) { (stp, cmd) =>
         cmd.flatMap(stp.tryNext).fold(ex => Error(ex.getMessage, stp), identity)
     }.takeWhile(_ != End)
 }
@@ -28,10 +30,14 @@ case class Draw(canvas: Canvas) extends Step {
         case Quit => End
         case _ => Error("Drawing command expected", this)
     }
+
+    override def render = Some(canvas.render)
 }
 
 case class Error(msg: String, step: Step) extends Step {
     override def next(cmd: Command) = step.next(cmd)
+
+    override def render = Some(msg)
 }
 
 case object End extends Step {
