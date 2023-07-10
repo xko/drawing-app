@@ -106,6 +106,12 @@ class WorkflowSpec extends AnyFunSpec with Matchers with LoneElement{
             replay("L doo").loneElement shouldBe "Unknown command" //TODO: In java version: "Invalid command"
         }
 
+        it("stops after Quit") {
+            replay("C 7 7","Q").size shouldBe 1
+            replay("C 7 7","baa","Q","L 2 2 2 2").size shouldBe 2
+            replay("Q").size shouldBe 0
+        }
+
 
     }
 
