@@ -4,7 +4,7 @@ import org.scalatest.LoneElement
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should.Matchers
 
-class CommandsSpec extends AnyFunSpec with Matchers with LoneElement{
+class WorkflowSpec extends AnyFunSpec with Matchers with LoneElement{
 
     def replay(cmds: String*): Seq[String] = Start.walk(Command.parseAll(cmds)).flatMap(_.render).toSeq
 
