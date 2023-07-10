@@ -63,10 +63,33 @@ class WorkflowSpec extends AnyFunSpec with Matchers with LoneElement{
 
         it("rejects subsequent C") {
             replay("C 1 1","C 5 5") shouldBe Seq(
-                """----
-                  ||  |
-                  |----""".stripMargin,
+                """---
+                  || |
+                  |---""".stripMargin,
                 "Drawing command expected"
+                )
+        }
+
+        it("should draw several lines"){
+            replay("C 20 4","L 1 2 6 2","L 6 3 6 4") shouldBe Seq(
+                """----------------------
+                  ||                    |
+                  ||                    |
+                  ||                    |
+                  ||                    |
+                  |----------------------""".stripMargin,
+                """----------------------
+                  ||                    |
+                  ||xxxxxx              |
+                  ||                    |
+                  ||                    |
+                  |----------------------""".stripMargin,
+                """----------------------
+                  ||                    |
+                  ||xxxxxx              |
+                  ||     x              |
+                  ||     x              |
+                  |----------------------""".stripMargin
                 )
         }
 
