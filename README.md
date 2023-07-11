@@ -1,3 +1,27 @@
+## The Drawing APP (scala+java)
+This is re-implementation in scala of the application described below. 
+The scala project is described as usual in [build.sbt](build.sbt).
+Scala implementation is in the new package [com.springernature.drawing.scala](src/main/scala/com/springernature/drawing/scala), 
+original java implementation remains intact and is also compilable/runnable from sbt. 
+
+To run scala version:
+```bash
+sbt "runMain com.springernature.drawing.scala.DrawingApplication"
+```
+To run scala tests:
+```bash
+sbt test
+```
+To java version:
+```bash
+sbt "runMain com.springernature.drawing.DrawingApplication"
+```
+Note: Java tests are not runnable from sbt at the moment, but if sbt project is imported into IntelliJ, 
+it can run both java and scala tests.
+
+
+----------------------------------------
+
 ## The problem
 
 In the pairing interview we will be extending a simple console version of a drawing program.
