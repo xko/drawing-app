@@ -61,12 +61,16 @@ class WorkflowSpec extends AnyFunSpec with Matchers with LoneElement{
                   |------""".stripMargin
         }
 
-        it("rejects subsequent C") {
-            replay("C 1 1","C 5 5") shouldBe Seq(
+        it("creates another canvas") {
+            replay("C 1 1","C 5 3") shouldBe Seq(
                 """---
                   || |
                   |---""".stripMargin,
-                "Drawing command expected"
+                """-------
+                  ||     |
+                  ||     |
+                  ||     |
+                  |-------""".stripMargin
                 )
         }
 

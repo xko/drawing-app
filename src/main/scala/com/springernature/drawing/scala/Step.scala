@@ -27,8 +27,9 @@ case object Start extends Step {
 case class Draw(canvas: Canvas) extends Step {
     override def next(cmd: Command) = cmd match {
         case c: DrawingCommand => Draw(c.draw(canvas))
+        case c: CreateCanvas => Draw(c.create)
         case Quit => End
-        case _ => Error("Drawing command expected", this)
+        case c => Error("Unexpected command:"+c, this)
     }
 
     override def render = Some(canvas.render)
