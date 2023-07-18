@@ -93,6 +93,17 @@ class WorkflowSpec extends AnyFunSpec with Matchers with LoneElement{
                 )
         }
 
+        it("draws rectangle") {
+            replay("C 20 4", "R 1 2 6 4").last shouldBe
+                """----------------------
+                  ||                    |
+                  ||xxxxxx              |
+                  ||x    x              |
+                  ||xxxxxx              |
+                  |----------------------""".stripMargin
+        }
+
+
         it("works after error") {
             replay("C 4 2","Doo", "L 1 1 1 2").takeRight(2) shouldBe Seq (
                 "Unknown command",
