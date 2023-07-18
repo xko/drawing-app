@@ -52,13 +52,9 @@ class WorkflowSpec extends AnyFunSpec with Matchers with LoneElement{
                   |------""".stripMargin
         }
 
-        it("draws line with outside coordinates") {
+        it("rejects the line with outside coordinates") {
             replay("C 4 3","L 0 2 10 2").last shouldBe
-                """------
-                  ||    |
-                  ||xxxx|
-                  ||    |
-                  |------""".stripMargin
+                "x:0 out of range (0,4]"
         }
 
         it("creates another canvas") {
@@ -74,7 +70,7 @@ class WorkflowSpec extends AnyFunSpec with Matchers with LoneElement{
                 )
         }
 
-        it("should draw several lines"){
+        it("draws several lines"){
             replay("C 20 4","L 1 2 6 2","L 6 3 6 4") shouldBe Seq(
                 """----------------------
                   ||                    |
