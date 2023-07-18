@@ -9,7 +9,8 @@ object Command {
     val RECreate = "C (\\d+) (\\d+)".r
     val REDrawLine = "L (\\d+) (\\d+) (\\d+) (\\d+)".r
     val REDrawRect = "R (\\d+) (\\d+) (\\d+) (\\d+)".r
-    val Q = "Q"
+    val StrQuit = "Q"
+    val StrUndo = "U"
 
     def parse(str: String): Try[Command] = Try {
         str match {
@@ -23,7 +24,8 @@ object Command {
                 DrawLineH(x1.toInt, x2.toInt, y1.toInt),
                 DrawLineH(x1.toInt, x2.toInt, y2.toInt)
             )
-            case Q => Quit
+            case StrQuit => Quit
+            case StrUndo => Undo
             case _ => throw new IllegalArgumentException("Unknown command")
         }
     }
@@ -57,5 +59,5 @@ case class DrawLineH(x1: Int, x2: Int, y: Int) extends DrawingCommand {
 
 case object Quit extends Command
 
-
+case object Undo extends Command
 

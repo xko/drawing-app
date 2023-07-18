@@ -104,6 +104,58 @@ class WorkflowSpec extends AnyFunSpec with Matchers with LoneElement{
         }
 
 
+        it("undoes"){
+            replay("C 20 4","L 1 2 6 2","L 6 3 6 4","U","U") shouldBe Seq(
+                """----------------------
+                  ||                    |
+                  ||                    |
+                  ||                    |
+                  ||                    |
+                  |----------------------""".stripMargin,
+                """----------------------
+                  ||                    |
+                  ||xxxxxx              |
+                  ||                    |
+                  ||                    |
+                  |----------------------""".stripMargin,
+                """----------------------
+                  ||                    |
+                  ||xxxxxx              |
+                  ||     x              |
+                  ||     x              |
+                  |----------------------""".stripMargin,
+                """----------------------
+                  ||                    |
+                  ||xxxxxx              |
+                  ||                    |
+                  ||                    |
+                  |----------------------""".stripMargin,
+                """----------------------
+                  ||                    |
+                  ||                    |
+                  ||                    |
+                  ||                    |
+                  |----------------------""".stripMargin
+            )
+        }
+
+        it("should draw rectangle"){
+            replay("C 20 4","R 1 2 6 4") shouldBe Seq(
+                """----------------------
+                  ||                    |
+                  ||                    |
+                  ||                    |
+                  ||                    |
+                  |----------------------""".stripMargin,
+                """----------------------
+                  ||                    |
+                  ||xxxxxx              |
+                  ||x    x              |
+                  ||xxxxxx              |
+                  |----------------------""".stripMargin,
+                )
+        }
+
         it("works after error") {
             replay("C 4 2","Doo", "L 1 1 1 2").takeRight(2) shouldBe Seq (
                 "Unknown command",

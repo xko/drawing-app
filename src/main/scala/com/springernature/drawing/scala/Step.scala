@@ -18,17 +18,18 @@ sealed trait Step {
 
 case object Start extends Step {
     override def next(cmd: Command) = cmd match {
-        case c: CreateCanvas => Draw(c.create)
+        case c: CreateCanvas => Draw(c.create, this)
         case Quit => End
         case _ => Error("Please create a canvas first", this)
     }
 }
 
-case class Draw(canvas: Canvas) extends Step {
+case class Draw(canvas: Canvas, prev: Step) extends Step {
     override def next(cmd: Command) = cmd match {
-        case c: DrawingCommand => Draw(c.draw(canvas))
-        case c: CreateCanvas => Draw(c.create)
+        case c: DrawingCommand => Draw(c.draw(canvas), this)
+        case c: CreateCanvas => Draw(c.create, this)
         case Quit => End
+        case Undo => prev
         case c => Error("Unexpected command:"+c, this)
     }
 
