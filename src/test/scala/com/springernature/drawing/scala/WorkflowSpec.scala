@@ -5,8 +5,10 @@ import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should.Matchers
 
 class WorkflowSpec extends AnyFunSpec with Matchers with LoneElement{
+    import Parsers._
+    import ConsoleParsers._
 
-    def replay(cmds: String*): Seq[String] = Start.walk(Command.parseAll(cmds)).flatMap(_.render).toSeq
+    def replay(cmds: String*): Seq[String] = Start.walk(fromStringAll[Command](cmds)).flatMap(_.render).toSeq
 
     describe("at the start") {
         it("crates and prints the canvas") {

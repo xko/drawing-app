@@ -2,7 +2,10 @@ package com.springernature.drawing.scala
 
 
 object DrawingApplication {
-    def consoleIn = Command.parseAll(io.Source.stdin.getLines())
+    import Parsers._
+    import ConsoleParsers._
+
+    def consoleIn = fromStringAll[Command](io.Source.stdin.getLines())
 
     def consoleOut(msg: Option[String]) = {
         msg.foreach(println)

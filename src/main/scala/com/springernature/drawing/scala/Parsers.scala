@@ -1,6 +1,8 @@
 package com.springernature.drawing.scala
 import shapeless._
 
+import scala.util.Try
+
 object Parsers {
     type FromCertainString[A] = PartialFunction[String,A]
 
@@ -16,5 +18,10 @@ object Parsers {
     implicit def genericFromString[A, R](implicit gen: Generic.Aux[A, R], reprParser: Lazy[FromString[R]]): FromString[A] =
         s => gen.from(reprParser.value(s))
 
-    def fromString[T:FromString](s:String) = implicitly[FromString[T]].apply(s)
+    def fromString[T:FromString](s:String): T = implicitly[FromString[T]].apply(s)
+
+    def fromStringTry[T:FromString](s:String): Try[T] = Try(fromString[T](s))
+
+    def fromStringAll[T:FromString](input: IterableOnce[String]):Iterator[Try[T]] = input.iterator.map(fromStringTry[T])
+
 }

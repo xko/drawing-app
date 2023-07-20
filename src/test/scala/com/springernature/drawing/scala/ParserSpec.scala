@@ -13,8 +13,8 @@ class ParserSpec extends AnyFunSpec with Matchers{
         implicit val goFromString: FromCertainString[Go.type] = {case "G" => Go}
         case object Bo extends Thum
         implicit val boFromString: FromCertainString[Bo.type] = {case "B" => Bo}
-        Thum.parse("G") shouldBe Go
-        Thum.parse("B") shouldBe Bo
+        Parsers.fromString[Thum]("G") shouldBe Go
+        Parsers.fromString[Thum]("B") shouldBe Bo
     }
 
 
